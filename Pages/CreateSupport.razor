@@ -1,0 +1,73 @@
+@page "/create-support"
+@using M4_04_CosmosDB_WebApp.Models
+@inject M4_04_CosmosDB_WebApp.Services.CosmosService CosmosService
+@inject NavigationManager NavManager
+
+<h3>Opret ny support henvendelse</h3>
+
+@if (isSubmitted)
+{
+    <div class="alert alert-success">
+        Henvendelsen er oprettet.
+    </div>
+}
+
+<EditForm Model="@supportMessage" OnValidSubmit="@HandleValidSubmit">
+<DataAnnotationsValidator />
+<ValidationSummary />
+
+<fieldset>
+    <legend>Kontaktinformation</legend>
+    <div class="mb-3">
+        <label for="navn">Navn:</label>
+        <InputText id="navn" class="form-control" @bind-Value="supportMessage.kontakt.navn" />
+        <ValidationMessage For="@(() => supportMessage.kontakt.navn)" />
+    </div>
+    
+    <div class="mb-3">
+        <label for="email">Email:</label>
+        <InputText id="email" class="form-control" @bind-Value="supportMessage.kontakt.email" />
+        <ValidationMessage For="@(() => supportMessage.kontakt.email)" />
+    </div>
+    
+    <div class="mb-3">
+        <label for="telefon">Telefon:</label>
+        <InputText id="telefon" class="form-control" @bind-Value="supportMessage.kontakt.telefon" />
+        <ValidationMessage For="@(() => supportMessage.kontakt.telefon)" />
+    </div>
+</fieldset>
+
+<div class="mb-3">
+    <label for="category">Kategori:</label>
+    <InputSelect id="category" class="form-control" @bind-Value="supportMessage.category">
+        <option value="">Vælg kategori</option>
+        <option value="Teknisk spørgsmål">Teknisk spørgsmål</option>
+        <option value="Garanti">Garanti</option>
+        <option value="Fakturering">Fakturering</option>
+    </InputSelect>
+    <ValidationMessage For="@(() => supportMessage.category)" />
+</div>
+
+<div>
+    <label for="beskrivelse">Beskrivelse:</label>
+    <InputTextArea id="beskrivelse" class="form-control" rows="4" @bind-Value="supportMessage.beskrivelse"/>
+    <ValidationMessage For="@(() => supportMessage.beskrivelse)" />
+</div>
+
+<button type="submit" class="btn btn-primary">Opret henvendelse</button>
+</EditForm>
+
+@code {
+    private SupportMessage supportMessage = new();
+    private bool isSubmitted = false;
+
+    private async Task HandleValidSubmit()
+    {
+        supportMessage.datoTid = DateTime.UtcNow;
+        await CosmosService.AddSupportMessageAsync(supportMessage);
+
+        isSubmitted = true;
+        supportMessage = new(); // Nulstil formularen efter
+    }
+
+}

@@ -1,0 +1,65 @@
+@page "/support-list"
+@using M4_04_CosmosDB_WebApp.Models
+@inject M4_04_CosmosDB_WebApp.Services.CosmosService CosmosService
+
+<h3>Supporthenvendelser</h3>
+
+@if (isLoading)
+{
+    <p><em>Indlæser data...</em></p>
+}
+else if (messages == null || !messages.Any())
+{
+    <p>Ingen henvendelser fundet.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Kategori</th>
+            <th>Navn</th>
+            <th>Email</th>
+            <th>Telefon</th>
+            <th>Beskrivelse</th>
+            <th>Dato</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var m in messages)
+        {
+            <tr>
+                <td>@m.id</td>
+                <td>@m.category</td>
+                <td>@m.kontakt.navn</td>
+                <td>@m.kontakt.email</td>
+                <td>@m.kontakt.telefon</td>
+                <td>@m.beskrivelse</td>
+                <td>@m.datoTid.ToLocalTime().ToString("g")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<SupportMessage> messages = new();
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            messages = await CosmosService.GetAllSupportMessagesAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Fejl ved hentning: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}
