@@ -18,22 +18,26 @@ supporthenvendelser. Data bliver gemt og hentet fra en **CosmosDB database**.
 
 ## Oprettelse af CosmosDB database som passer til løsningen med Azure CLI
 1. **Opret CosmosDB konto:**
-- az cosmosdb create \
-  --name <vælg-accountnavn> \
-  --resource-group <dit-resource-gruppe-navn> \
-  --locations regionName=<vælg-region> \
+   ```bash
+   az cosmosdb create \
+     --name `<vælg-accountnavn>` \
+     --resource-group `<dit-resource-gruppe-navn>` \
+     --locations regionName=`<vælg-region>` \
 2. **Opret databasen:**
-- az cosmosdb sql database create \
-  --account-name <skriv-valgt-accountnavn> \
-  --resource-group <dit-resource-group-navn> \
-  --name <navngiv-databasen>
+    ```bash
+   az cosmosdb sql database create \
+   --account-name `<skriv-valgt-accountnavn>` \
+   --resource-group `<dit-resource-gruppe-navn>` \
+   --name `<navngiv-databasen>`
 3. **Opret container:**
-- az cosmosdb sql container create \
-  --account-name <dit-accountnavn> \
-  --resource-group <dit-resource-group-navn> \
-  --database-name <database-navn> \
-  --name <navngiv-container> \
-  --partition-key-path "<vælg-sti-til-cointainer"
+    ```bash
+   az cosmosdb sql container create \
+    --account-name `<dit-accountnavn>` \
+    --resource-group `<dit-resource-gruppe-navn>` \
+    --database-name `<database-navn>` \
+    --name `<navngiv-container>` \
+    --partition-key-path `"/vælg-sti-til-cointainer"`
+
 4. **Forbind WebApp til CosmosDB**
 - Find connection string i Azure Portal.
 - Indsæt den i appsettings.json
