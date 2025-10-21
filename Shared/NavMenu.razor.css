@@ -1,53 +1,75 @@
-.navbar-toggler {
-    background-color: rgba(255, 255, 255, 0.1);
+.sidebar, .nav-scrollable {
+    background-color: #495057; 
+    width: 250px;
+    color: #ffffff; 
+    box-shadow: 2px 0 6px rgba(0,0,0,0.2);
+    height: 100vh;
 }
 
 .top-row {
     height: 3.5rem;
-    background-color: rgba(0,0,0,0.4);
+    background-color: #343a40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #ffffff; 
 }
 
 .navbar-brand {
-    font-size: 1.1rem;
-}
-
-.oi {
-    width: 2rem;
-    font-size: 1.1rem;
-    vertical-align: text-top;
-    top: -2px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #ffffff;
 }
 
 .nav-item {
-    font-size: 0.9rem;
-    padding-bottom: 0.5rem;
+    font-size: 0.95rem;
+    padding: 0.25rem 0;
 }
 
-    .nav-item:first-of-type {
-        padding-top: 1rem;
-    }
+.nav-item:first-of-type {
+    padding-top: 1rem;
+}
 
-    .nav-item:last-of-type {
-        padding-bottom: 1rem;
-    }
+.nav-item:last-of-type {
+    padding-bottom: 1rem;
+}
 
-    .nav-item ::deep a {
-        color: #d7d7d7;
-        border-radius: 4px;
-        height: 3rem;
-        display: flex;
-        align-items: center;
-        line-height: 3rem;
-    }
+.nav-item ::deep a {
+    color: #f8f9fa;
+    border-radius: 6px;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+    line-height: 3rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
 
 .nav-item ::deep a.active {
     background-color: rgba(255,255,255,0.25);
-    color: white;
+    color: #fff;
+    font-weight: 600;
 }
 
 .nav-item ::deep a:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
+    background-color: rgba(255,255,255,0.15);
+    color: #fff;
+}
+
+.oi {
+    width: 1.6rem;
+    font-size: 1.1rem;
+    vertical-align: text-top;
+    margin-right: 0.4rem;
+}
+
+.navbar-toggler {
+    background-color: rgba(255, 255, 255, 0.15);
+    border: none;
+    border-radius: 4px;
 }
 
 @media (min-width: 641px) {
@@ -56,12 +78,10 @@
     }
 
     .collapse {
-        /* Never collapse the sidebar for wide screens */
         display: block;
     }
-    
+
     .nav-scrollable {
-        /* Allow sidebar to scroll for tall menus */
         height: calc(100vh - 3.5rem);
         overflow-y: auto;
     }
